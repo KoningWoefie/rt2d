@@ -11,7 +11,9 @@
 
 #include <rt2d/scene.h>
 
-#include "myentity.h"
+#include "enemy.h"
+#include "gate.h"
+#include "wave.h"
 
 /// @brief The MyScene class is the Scene implementation.
 class MyScene : public Scene
@@ -29,9 +31,18 @@ public:
 
 private:
 	/// @brief the rotating square in the middle of the screen
-	MyEntity* myentity;
+	Wave* wave;
+	
+	///
+	Gate* exitGate;
+	Gate* entryGate;
+
 	/// @brief a Timer to rotate the color every n seconds
 	Timer t;
+
+	bool entryGatePosXMade;
+	bool exitGatePosXMade;
+	bool waveMade;
 };
 
 #endif /* SCENE00_H */
