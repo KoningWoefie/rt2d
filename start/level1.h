@@ -10,17 +10,12 @@
 #define LEVEL1_H
 
 #include <rt2d/scene.h>
-
-<<<<<<< Updated upstream:start/myscene.h
 #include "myentity.h"
-=======
 #include "enemy.h"
 #include "gate.h"
 #include "wave.h"
 #include "tile.h"
 #include "grid.h"
-#include <list>
->>>>>>> Stashed changes:start/level1.h
 
 /// @brief The Level1 class is the Scene implementation.
 class Level1 : public Scene
@@ -36,16 +31,7 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 
-	void damageGate();
-
 private:
-	/// @brief the rotating square in the middle of the screen
-<<<<<<< Updated upstream:start/myscene.h
-	MyEntity* myentity;
-	/// @brief a Timer to rotate the color every n seconds
-	Timer t;
-};
-=======
 	Wave* wave;
 	
 	///
@@ -57,9 +43,6 @@ private:
 	///
 	Tile* tile;
 
-	/// @brief a Timer to rotate the color every n seconds
-	Timer t;
-
 	bool entryGatePosXMade;
 	bool exitGatePosXMade;
 	bool waveMade;
@@ -67,6 +50,5 @@ private:
 	float mousePosX;
 	float mousePosY;
 };				 
->>>>>>> Stashed changes:start/level1.h
 
 #endif /* SCENE00_H */

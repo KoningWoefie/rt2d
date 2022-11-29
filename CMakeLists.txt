@@ -156,10 +156,6 @@ IF(MAKE_START)
 		start/main.cpp
 		start/myentity.cpp
 		start/myentity.h
-<<<<<<< Updated upstream
-		start/myscene.cpp
-		start/myscene.h
-=======
 		start/level1.cpp
 		start/level1.h
 		start/enemy.cpp
@@ -172,7 +168,6 @@ IF(MAKE_START)
 		start/tile.h
 		start/grid.cpp
 		start/grid.h
->>>>>>> Stashed changes
 	)
 	target_link_libraries(start
 		${ALL_GRAPHICS_LIBS}

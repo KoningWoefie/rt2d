@@ -4,6 +4,7 @@
  * Copyright 2015 Your Name <you@yourhost.com>
  */
 
+#include <iostream>
 #include <fstream>
 #include <sstream>
 
@@ -11,19 +12,10 @@
 
 Level1::Level1() : Scene()
 {
-	// start the timer.
-	t.start();
+	entryGatePosXMade = false;
+	exitGatePosXMade = false;
+	waveMade = false;
 
-<<<<<<< Updated upstream:start/myscene.cpp
-	// create a single instance of MyEntity in the middle of the screen.
-	// the Sprite is added in Constructor of MyEntity.
-	myentity = new MyEntity();
-	myentity->position = Point2(SWIDTH/2, SHEIGHT/2);
-
-	// create the scene 'tree'
-	// add myentity to this Scene as a child.
-	this->addChild(myentity);
-=======
 	//create two gates and an enemy at the position of the entrygate
 	exitGate = new Gate(1000);
 	exitGate->position.y = SHEIGHT / 2;
@@ -41,19 +33,12 @@ Level1::Level1() : Scene()
 	this->addChild(entryGate);
 
 	this->addChild(grid);
->>>>>>> Stashed changes:start/level1.cpp
 }
 
 
 Level1::~Level1()
 {
 	// deconstruct and delete the Tree
-<<<<<<< Updated upstream:start/myscene.cpp
-	this->removeChild(myentity);
-
-	// delete myentity from the heap (there was a 'new' in the constructor)
-	delete myentity;
-=======
 	this->removeChild(exitGate);
 	this->removeChild(entryGate);
 	this->removeChild(grid);
@@ -63,37 +48,32 @@ Level1::~Level1()
 	delete wave;
 	delete exitGate;
 	delete entryGate;
->>>>>>> Stashed changes:start/level1.cpp
 }
 
 void Level1::update(float deltaTime)
 {
-	// ###############################################################
-	// Escape key stops the Scene
-	// ###############################################################
-	if (input()->getKeyUp(KeyCode::Escape)) {
-		this->stop();
+	//check the size of the sprite only once. Can't do this at the constructor because the sprite hasn't loaded yet
+	if (exitGate->sizeOf == Point2(0, 0))
+	{
+		exitGate->sizeOf = exitGate->sprite()->size;
+		
+		//set the position so that the sprite is at the edge regardless of scale
+		exitGate->position.x = SWIDTH - (exitGate->sizeOf.x * exitGate->scale.x)/2;
+		exitGatePosXMade = true;
 	}
+	if (entryGate->sizeOf == Point2(0, 0))
+	{
+		entryGate->sizeOf = entryGate->sprite()->size;
+		
+		//set the position so that the sprite is at the edge regardless of scale
+		entryGate->position.x = (entryGate->sizeOf.x * entryGate->scale.x) / 2;
+		entryGatePosXMade = true;
+	}
+	if (entryGatePosXMade && exitGatePosXMade && !waveMade)
+	{
+		int i = 0;
+		wave = new Wave(10, entryGate->position, exitGate->position, 100);
 
-	// ###############################################################
-	// Spacebar scales myentity
-	// ###############################################################
-	if (input()->getKeyDown(KeyCode::Space)) {
-		myentity->scale = Point(0.5f, 0.5f);
-	}
-	if (input()->getKeyUp(KeyCode::Space)) {
-		myentity->scale = Point(1.0f, 1.0f);
-	}
-
-<<<<<<< Updated upstream:start/myscene.cpp
-	// ###############################################################
-	// Rotate color
-	// ###############################################################
-	if (t.seconds() > 0.0333f) {
-		RGBAColor color = myentity->sprite()->color;
-		myentity->sprite()->color = Color::rotate(color, 0.01f);
-		t.start();
-=======
 		for each (Enemy * enemy in wave->enemies)
 		{
 			this->addChild(enemy);
@@ -101,11 +81,10 @@ void Level1::update(float deltaTime)
 			i++;
 		}
 		waveMade = true;
->>>>>>> Stashed changes:start/level1.cpp
 	}
 	for (int i = 0; i < wave->enemies.size(); i++)
 	{
-		if (wave->enemies[i]->reachedEndPoint == true);
+		if (wave->enemies[i]->reachedEndPoint);
 		{
 			this->removeChild(wave->enemies[i]);
 			delete wave->enemies[i];
