@@ -16,7 +16,7 @@ public:
 
 	void spawn(Point3 targetPosition, Gate* gate, Point3 spawnPosition, int speed);
 
-	bool reachedEndPoint = false;
+	bool reachedEndPoint;
 
 private:
 	Point3 TargetPosition;

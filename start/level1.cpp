@@ -27,12 +27,17 @@ Level1::Level1() : Scene()
 
 	grid = new Grid(15, 20);
 
+	button1 = new ImageButton("Bomb tower");
+
+	button1->setCallbackFunction(std::bind(&Level1::spawnTower, this));
+
 	// create the scene 'tree'
 	// add the gates and enemy as a child
 	this->addChild(exitGate);
 	this->addChild(entryGate);
 
 	this->addChild(grid);
+	this->addChild(button1);
 }
 
 
@@ -72,19 +77,19 @@ void Level1::update(float deltaTime)
 	if (entryGatePosXMade && exitGatePosXMade && !waveMade)
 	{
 		int i = 0;
-		wave = new Wave(10, entryGate->position, exitGate->position, 100);
+		wave = new Wave(10, entryGate->position, exitGate->position, 1);
 
-		for each (Enemy * enemy in wave->enemies)
+		for (int i = 0; i < wave->enemies.size(); i++)
 		{
+			Enemy* enemy = wave->enemies[i];
 			this->addChild(enemy);
 			enemy->spawn(exitGate->position, exitGate, entryGate->position + Point3(-50 * i, 0, 0), 100);
-			i++;
 		}
 		waveMade = true;
 	}
 	for (int i = 0; i < wave->enemies.size(); i++)
 	{
-		if (wave->enemies[i]->reachedEndPoint);
+		if (wave->enemies[i]->reachedEndPoint)
 		{
 			this->removeChild(wave->enemies[i]);
 			delete wave->enemies[i];
@@ -95,5 +100,35 @@ void Level1::update(float deltaTime)
 	if (exitGate->health <= 0)
 	{
 		this->removeChild(exitGate);
+	}
+	if (grid->ghostTower != nullptr)
+	{
+		grid->ghostTower->moveWithMouse();
+	}
+	for (int i = 0; i < towers.size(); i++)
+	{
+		if (towers[i]->placed && wave->enemies.size() >= 0)
+		{
+			towers[i]->spawnProjectile();
+			towers[i]->targetEnemy(towers[i]->projectile->checkClosestEnemy(wave->enemies), deltaTime);
+			this->addChild(towers[i]->projectile);
+			if (towers[i]->projectile->hitTarget)
+			{
+				this->removeChild(towers[i]->projectile);
+				delete towers[i]->projectile;
+				towers[i]->projectile = nullptr;
+				towers[i]->projectileSpawned = false;
+			}
+		}
+	}
+}
+
+void Level1::spawnTower()
+{
+	if (grid->ghostTower == nullptr)
+	{
+		grid->ghostTower = new Tower();
+		towers.push_back(grid->ghostTower);
+		grid->addChild(grid->ghostTower);
 	}
 }

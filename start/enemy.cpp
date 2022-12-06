@@ -7,6 +7,7 @@ Enemy::Enemy() : Entity()
 	this->rotation.z = PI;
 	this->sprite()->color = WHITE;
 	velo = 0;
+	localGate = nullptr;
 	reachedEndPoint = false;
 }
 
@@ -22,7 +23,8 @@ void Enemy::update(float deltaTime)
 
 void Enemy::move(Point3 targetPosition, Gate* gate, int speed, float deltaTime)
 {
-	if (this->position.x <= targetPosition.x || this->position.y != targetPosition.y)
+	Vector2 length = Vector2(this->position.x - targetPosition.x, this->position.y - targetPosition.y);
+	if (length.getLength() > 1)
 	{
 		this->position.x += speed * deltaTime;
 	}

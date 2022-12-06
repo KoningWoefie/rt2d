@@ -16,6 +16,8 @@
 #include "wave.h"
 #include "tile.h"
 #include "grid.h"
+#include "imagebutton.h"
+#include "tower.h"
 
 /// @brief The Level1 class is the Scene implementation.
 class Level1 : public Scene
@@ -31,6 +33,8 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 
+	void spawnTower();
+
 private:
 	Wave* wave;
 	
@@ -43,12 +47,16 @@ private:
 	///
 	Tile* tile;
 
+	ImageButton* button1;
+
 	bool entryGatePosXMade;
 	bool exitGatePosXMade;
 	bool waveMade;
 	
 	float mousePosX;
 	float mousePosY;
+
+	std::vector<Tower*> towers;
 };				 
 
 #endif /* SCENE00_H */

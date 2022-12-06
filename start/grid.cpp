@@ -2,6 +2,7 @@
 
 Grid::Grid(int cellAmountHeight, int cellAmountWidth)
 {
+	ghostTower = nullptr;
 	for (int y = 0; y < cellAmountHeight; y++)
 	{
 		for (int x = 0; x < cellAmountWidth; x++)
@@ -36,6 +37,7 @@ void Grid::checkTileSelectionWithMouse()
 {
 	for (int i = 0; i < tiles.size(); i++)
 	{
+		Tile* tile = tiles[i];
 		float mousePosX = input()->getMouseX();
 		float mousePosY = input()->getMouseY();
 		float xPos = tiles[i]->position.x;
@@ -47,17 +49,23 @@ void Grid::checkTileSelectionWithMouse()
 		float right = xPos + 32;
 		if (mousePosX > left && mousePosX < right && mousePosY > top && mousePosY < bottom)
 		{
-			tiles[i]->sprite()->color = RED;;
+			tile->sprite()->color = RED;;
 			if (input()->getMouseDown(0))
 			{
-				tiles[i]->sprite()->color = BLUE;
-				this->removeChild(tiles[i]);
+				tile->sprite()->color = BLUE;
+				if (ghostTower != nullptr)
+				{
+					ghostTower->position = tile->position;
+					ghostTower->placed = true;
+					ghostTower = nullptr;
+				}
+				this->removeChild(tile);
 				tiles.erase(tiles.begin() + i);
 			}
 		}
 		else
 		{
-			tiles[i]->sprite()->color = WHITE;
+			tile->sprite()->color = WHITE;
 		}
 	}
 }

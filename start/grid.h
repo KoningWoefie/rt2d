@@ -2,6 +2,7 @@
 #define GRID_H
 
 #include "tile.h"
+#include "tower.h"
 
 
 class Grid : public Entity
@@ -12,9 +13,12 @@ public:
 	std::vector<Tile*> tiles;
 	virtual void update(float deltaTime);
 	void checkTileSelectionWithMouse();
+
+	bool towerSpawned;
+
+	Tower* ghostTower;
 	
 private:
-
 };
 
 
