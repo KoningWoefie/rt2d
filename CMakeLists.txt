@@ -152,7 +152,11 @@ file(
 # start                                                            #
 ####################################################################
 IF(MAKE_START)
-	add_executable(start
+	#ProjectName
+	set(PROJECTNAME start)
+	message("Making project: ${PROJECTNAME}")
+	
+	add_executable(${PROJECTNAME}
 		start/main.cpp
 		start/myentity.cpp
 		start/myentity.h
@@ -168,15 +172,64 @@ IF(MAKE_START)
 		start/tile.h
 		start/grid.cpp
 		start/grid.h
+		start/imagebutton.cpp
+		start/imagebutton.h
+		start/tower.cpp
+		start/tower.h
+		start/projectile.cpp
+		start/projectile.h
+		start/bombtower.cpp
+		start/bombtower.h
+		start/bomb.cpp
+		start/bomb.h
+		start/infantrytower.cpp
+		start/infantrytower.h
+		start/bullet.cpp
+		start/bullet.h
 	)
-	target_link_libraries(start
+	target_link_libraries(${PROJECTNAME}
 		${ALL_GRAPHICS_LIBS}
 	)
+	
+	IF(USE_CURL)
+		target_link_libraries(${PROJECTNAME} ${CURL_LIB})
+	ENDIF()
+	
+	
+	# Set project 'Start' as default startup project in Visual Studio
+	if(${CMAKE_VERSION} VERSION_GREATER "3.6.0")
+		set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECTNAME})
+	else()
+		message("Current CMake version: ${CMAKE_VERSION} Please consider to upgrade CMake")
+	endif()
+	
+	
 	# Copy assets to the build directory
-	file(
-		COPY start/assets
-		DESTINATION ${CMAKE_BINARY_DIR}
-	)
+	IF(WIN32)
+		# Add post-build-event in Visual Studio to copy assets to the build directories (Debug / Release)
+		add_custom_command(
+			TARGET ${PROJECTNAME}
+			POST_BUILD
+			
+			COMMAND xcopy /Y/I \"${CMAKE_SOURCE_DIR}\\start\\assets\\\"* \"$(OutDir)assets\\\"*
+			COMMAND xcopy /Y/I \"${CMAKE_SOURCE_DIR}\\rt2d\\shaders\\\"* \"$(OutDir)shaders\\\"*
+			COMMAND xcopy /Y/I \"${CMAKE_SOURCE_DIR}\\rt2d\\fonts\\\"* \"$(OutDir)fonts\\\"*
+			COMMENT "Copy assets to the build directory"
+		)
+		
+		#Set correct working directory in Visual Studio
+		if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
+			set_property(TARGET ${PROJECTNAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "$(OutDir)")
+		else()
+			message("Current CMake version: ${CMAKE_VERSION} Please consider to upgrade CMake")
+		endif()
+	ELSE()
+		file(
+			COPY start/assets
+			DESTINATION ${CMAKE_BINARY_DIR}
+		)
+	ENDIF()
+	
 ENDIF()
 
 ####################################################################
