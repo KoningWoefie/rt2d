@@ -14,11 +14,23 @@ public:
 
 	virtual void update(float deltaTime);
 
+	bool checkIfHovered();
+
 	Shopwindow* getShopwindow() { return shoow; };
+
+	int GetWidth() { return width; };
+
+	int GetHeight() { return height; };
+
+	Point3 GetRealPos() { return realPos; };
 
 private:
 	Omnibar* omni;
 	Shopwindow* shoow;
+
+	int width;
+	int height;
+	Point3 realPos;
 };
 
 #endif

@@ -33,8 +33,11 @@ Level1::Level1() : Scene()
 
 	hud = new Hud();
 
-	hud->getShop()->getShopwindow()->imgButtons[0]->setCallbackFunction(std::bind(&Level1::spawnBombTower, this));
-	hud->getShop()->getShopwindow()->imgButtons[1]->setCallbackFunction(std::bind(&Level1::spawnInfantryTower, this));
+	button1 = hud->getShop()->getShopwindow()->imgButtons[0];
+	button2 = hud->getShop()->getShopwindow()->imgButtons[1];
+
+	button1->setCallbackFunction(std::bind(&Level1::spawnBombTower, this));
+	button2->setCallbackFunction(std::bind(&Level1::spawnInfantryTower, this));
 
 	// create the scene 'tree'
 	// add the gates and enemy as a child
@@ -63,7 +66,7 @@ Level1::~Level1()
 
 void Level1::update(float deltaTime)
 {
-	/*grid->interactable = !omni->hovered;*/
+	grid->interactable = !hud->checkIfUIisHovered();
 	//check the size of the sprite only once. Can't do this at the constructor because the sprite hasn't loaded yet
 	if (exitGate->sizeOf == Point2(0, 0))
 	{
@@ -144,20 +147,22 @@ void Level1::update(float deltaTime)
 
 void Level1::spawnBombTower()
 {
-	if (grid->ghostTower == nullptr)
+	if (grid->ghostTower == nullptr && hud->money >= 40)
 	{
 		grid->ghostTower = new Bombtower();
 		towers.push_back(grid->ghostTower);
 		grid->addChild(grid->ghostTower);
+		hud->money -= 40;
 	}
 }
 
 void Level1::spawnInfantryTower()
 {
-	if (grid->ghostTower == nullptr)
+	if (grid->ghostTower == nullptr && hud->money >= 60)
 	{
 		grid->ghostTower = new Infantrytower();
 		towers.push_back(grid->ghostTower);
 		grid->addChild(grid->ghostTower);
+		hud->money -= 60;
 	}
 }

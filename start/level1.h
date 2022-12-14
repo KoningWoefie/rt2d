@@ -21,6 +21,7 @@
 #include "bombtower.h"
 #include "infantrytower.h"
 #include "hud.h"
+#include "imagebutton.h"
 
 /// @brief The Level1 class is the Scene implementation.
 class Level1 : public Scene
@@ -53,6 +54,9 @@ private:
 	Tile* tile;
 
 	Hud* hud;
+
+	ImageButton* button1;
+	ImageButton* button2;
 
 	bool entryGatePosXMade;
 	bool exitGatePosXMade;

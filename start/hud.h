@@ -14,6 +14,8 @@ public:
 
 	virtual void update(float deltaTime);
 
+	bool checkIfUIisHovered();
+
 	Shop* getShop() { return shop; };
 
 	int money;
@@ -21,6 +23,8 @@ private:
 	Shop* shop;
 
 	Text* moneyBox;
+
+	std::vector<Entity*> UIelements;
 };
 
 #endif
