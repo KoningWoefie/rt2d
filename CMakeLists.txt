@@ -186,6 +186,14 @@ IF(MAKE_START)
 		start/infantrytower.h
 		start/bullet.cpp
 		start/bullet.h
+		start/hud.cpp
+		start/hud.h
+		start/shop.cpp
+		start/shop.h
+		start/shopwindow.cpp
+		start/shopwindow.h
+		start/omnibar.cpp
+		start/omnibar.h
 	)
 	target_link_libraries(${PROJECTNAME}
 		${ALL_GRAPHICS_LIBS}
