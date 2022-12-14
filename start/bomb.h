@@ -1,20 +1,17 @@
-#ifndef GATE_H
-#define GATE_H
+#ifndef BOMB_H
+#define BOMB_H
 
-#include <rt2d/entity.h>
+#include "projectile.h"
 
-class Gate : public Entity
+class Bomb : public Projectile
 {
 public:
-	Gate(int health);
+	Bomb();
 
-	virtual ~Gate();
+	virtual ~Bomb();
 
 	virtual void update(float deltaTime);
 
-	Point2 sizeOf;
-
-	int health;
 private:
 
 };

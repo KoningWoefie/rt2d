@@ -2,8 +2,7 @@
 
 Gate::Gate(int givenHealth) : Entity()
 {
-	this->addSprite("assets/square.tga");
-	this->sprite()->color = WHITE;
+	this->addSprite("assets/gate.tga");
 	health = givenHealth;
 }
 

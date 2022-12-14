@@ -19,6 +19,8 @@ public:
 	void Disable();
 	void Enable();
 
+	bool hovered;
+
 private:
 	int ButtonState;
 	int SpriteFrame;

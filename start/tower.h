@@ -16,7 +16,7 @@ public:
 
 	void moveWithMouse();
 
-	void targetEnemy(Point3 target, float deltaTime);
+	virtual void targetEnemy(Point3 target, float deltaTime);
 
 	Projectile* projectile;
 
@@ -24,7 +24,9 @@ public:
 
 	bool placed;
 
-	void spawnProjectile();
+	virtual void spawnProjectile();
+
+	void deleteProjectile();
 
 private:
 };

@@ -3,9 +3,9 @@
 
 Enemy::Enemy() : Entity()
 {
-	this->addSprite("assets/BombTower.tga");
-	this->rotation.z = PI;
+	this->addSprite("assets/ship.tga");
 	this->sprite()->color = WHITE;
+	this->rotation.z = PI / 2;
 	velo = 0;
 	localGate = nullptr;
 	reachedEndPoint = false;

@@ -18,6 +18,9 @@
 #include "grid.h"
 #include "imagebutton.h"
 #include "tower.h"
+#include "bombtower.h"
+#include "infantrytower.h"
+#include "hud.h"
 
 /// @brief The Level1 class is the Scene implementation.
 class Level1 : public Scene
@@ -33,7 +36,9 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 
-	void spawnTower();
+	void spawnBombTower();
+
+	void spawnInfantryTower();
 
 private:
 	Wave* wave;
@@ -47,7 +52,7 @@ private:
 	///
 	Tile* tile;
 
-	ImageButton* button1;
+	Hud* hud;
 
 	bool entryGatePosXMade;
 	bool exitGatePosXMade;

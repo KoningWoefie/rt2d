@@ -1,18 +1,16 @@
-#include "gate.h"
+#include "bomb.h"
 
-Gate::Gate(int givenHealth) : Entity()
+Bomb::Bomb() : Projectile()
 {
-	this->addSprite("assets/square.tga");
-	this->sprite()->color = WHITE;
-	health = givenHealth;
+	this->addSprite("assets/Bomb.tga");
 }
 
-Gate::~Gate()
+Bomb::~Bomb()
 {
 
 }
 
-void Gate::update(float deltaTime)
+void Bomb::update(float deltaTime)
 {
 
 }

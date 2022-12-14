@@ -15,6 +15,7 @@ public:
 	void checkTileSelectionWithMouse();
 
 	bool towerSpawned;
+	bool interactable;
 
 	Tower* ghostTower;
 	

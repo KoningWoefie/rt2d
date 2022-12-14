@@ -1,20 +1,19 @@
-#ifndef GATE_H
-#define GATE_H
+#ifndef INFANTRYTOWER_H
+#define INFANTRYTOWER_H
 
-#include <rt2d/entity.h>
+#include "tower.h"
+#include "bullet.h"
 
-class Gate : public Entity
+class Infantrytower : public Tower
 {
 public:
-	Gate(int health);
+	Infantrytower();
 
-	virtual ~Gate();
+	virtual ~Infantrytower();
 
 	virtual void update(float deltaTime);
 
-	Point2 sizeOf;
-
-	int health;
+	void spawnProjectile();
 private:
 
 };

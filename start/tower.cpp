@@ -2,7 +2,7 @@
 
 Tower::Tower() : Entity()
 {
-	this->addSprite("assets/BombTower.tga");
+	this->addSprite("assets/infantrytower.tga");
 	this->sprite()->color = WHITE;
 	this->scale = Point(0.5, 0.5);
 	this->projectile = nullptr;
@@ -32,10 +32,10 @@ void Tower::targetEnemy(Point3 targetPosition, float deltaTime)
 
 void Tower::spawnProjectile()
 {
-	if (!projectileSpawned)
-	{
-		projectile = new Projectile();
-		projectile->position = this->position;
-		projectileSpawned = true;
-	}
+}
+
+void Tower::deleteProjectile()
+{
+	projectile = nullptr;
+	delete projectile;
 }

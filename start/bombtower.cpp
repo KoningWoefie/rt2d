@@ -1,18 +1,26 @@
-#include "gate.h"
+#include "bombtower.h"
 
-Gate::Gate(int givenHealth) : Entity()
+Bombtower::Bombtower() : Tower()
 {
-	this->addSprite("assets/square.tga");
-	this->sprite()->color = WHITE;
-	health = givenHealth;
+	this->addSprite("assets/BombTower.tga");
 }
 
-Gate::~Gate()
+Bombtower::~Bombtower()
 {
 
 }
 
-void Gate::update(float deltaTime)
+void Bombtower::update(float deltaTime)
 {
 
+}
+
+void Bombtower::spawnProjectile()
+{
+	if (!projectileSpawned)
+	{
+		projectile = new Bomb();
+		projectile->position = this->position;
+		projectileSpawned = true;
+	}
 }

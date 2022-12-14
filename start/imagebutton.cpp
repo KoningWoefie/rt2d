@@ -2,6 +2,7 @@
 
 ImageButton::ImageButton(std::string ButtonText) : Entity() 
 {
+	hovered = false;
 	ButtonState = 0;
 	SpriteFrame = 3;
 	_CallbackFunction = NULL;
@@ -32,13 +33,14 @@ void ImageButton::update(float deltaTime)
 
 	Point2 pos = worldposition();
 
-	int left = pos.x;
-	int right = pos.x + sprite()->size.x;
-	int top = pos.y;
-	int bottom = pos.y + +sprite()->size.y;
+	int left = pos.x - (sprite()->size.x * this->scale.x)/ 2;
+	int right = pos.x + (sprite()->size.x * this->scale.x)/2;
+	int top = pos.y - (sprite()->size.y * this->scale.y) / 2;
+	int bottom = pos.y + (sprite()->size.y * this->scale.y)/2;
 
 	if (ButtonState != 3) {
 		if (mousex > left && mousex < right && mousey > top && mousey < bottom) {
+			hovered = true;
 			if (input()->getMouseDown(0)) {
 				ButtonState = 2;
 				textbox->position = Point2(textbox->position.x, 32);
@@ -55,6 +57,7 @@ void ImageButton::update(float deltaTime)
 		}
 		else {
 			ButtonState = 0;
+			hovered = false;
 			textbox->position = Point2(textbox->position.x, 28);
 		}
 	}

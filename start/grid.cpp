@@ -3,6 +3,8 @@
 Grid::Grid(int cellAmountHeight, int cellAmountWidth)
 {
 	ghostTower = nullptr;
+	towerSpawned = false;
+	interactable = true;
 	for (int y = 0; y < cellAmountHeight; y++)
 	{
 		for (int x = 0; x < cellAmountWidth; x++)
@@ -47,9 +49,9 @@ void Grid::checkTileSelectionWithMouse()
 		float bottom = yPos + 32;
 		float left = xPos - 32;
 		float right = xPos + 32;
-		if (mousePosX > left && mousePosX < right && mousePosY > top && mousePosY < bottom)
+		if ((mousePosX > left && mousePosX < right && mousePosY > top && mousePosY < bottom) && interactable)
 		{
-			tile->sprite()->color = RED;;
+			tile->sprite()->color = RED;
 			if (input()->getMouseDown(0))
 			{
 				tile->sprite()->color = BLUE;
