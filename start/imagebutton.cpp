@@ -11,7 +11,6 @@ ImageButton::ImageButton(std::string ButtonText) : Entity()
 	this->sprite()->pivot = Point2(0, 0);
 	this->sprite()->frame(SpriteFrame);
 
-	//Text* line = new Text();
 	textbox = new Text();
 	textbox->scale = Point2(0.45f, 0.45f);
 	textbox->position = Point2(32, 28);

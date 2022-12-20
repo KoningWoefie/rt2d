@@ -9,6 +9,8 @@ Shopwindow::Shopwindow(Point3 spawnPos) : Entity()
 	{
 		ImageButton* imgbutt = new ImageButton("");
 		imgbutt->addSprite("assets/BombTower.tga");
+		imgbutt->rotation.z = PI;
+		imgbutt->rotation.y = PI;
 		imgbutt->position = Point3(-64 + i * 128, -192);
 		imgButtons.push_back(imgbutt);
 		this->addChild(imgbutt);

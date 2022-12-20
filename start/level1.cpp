@@ -15,6 +15,7 @@ Level1::Level1() : Scene()
 	entryGatePosXMade = false;
 	exitGatePosXMade = false;
 	waveMade = false;
+	timerStarted = false;
 
 	tile = nullptr;
 	wave = nullptr;
@@ -29,15 +30,19 @@ Level1::Level1() : Scene()
 	entryGate = new Gate(1000000000000000);
 	entryGate->position.y = SHEIGHT / 2;
 
-	grid = new Grid(15, 20);
+	grid = new Grid(25, 35);
 
 	hud = new Hud();
 
 	button1 = hud->getShop()->getShopwindow()->imgButtons[0];
 	button2 = hud->getShop()->getShopwindow()->imgButtons[1];
 
+	button2->addSprite("assets/infantrytower.tga");
+
 	button1->setCallbackFunction(std::bind(&Level1::spawnBombTower, this));
 	button2->setCallbackFunction(std::bind(&Level1::spawnInfantryTower, this));
+
+	t = new Timer();
 
 	// create the scene 'tree'
 	// add the gates and enemy as a child
@@ -84,9 +89,8 @@ void Level1::update(float deltaTime)
 		entryGate->position.x = (entryGate->sizeOf.x * entryGate->scale.x) / 2;
 		entryGatePosXMade = true;
 	}
-	if (entryGatePosXMade && exitGatePosXMade && !waveMade)
+	if (entryGatePosXMade && exitGatePosXMade && !waveMade && exitGate != nullptr)
 	{
-		int i = 0;
 		wave = new Wave(10, entryGate->position, exitGate->position, 1);
 
 		for (int i = 0; i < wave->enemies.size(); i++)
@@ -97,7 +101,7 @@ void Level1::update(float deltaTime)
 		}
 		waveMade = true;
 	}
-	for (int i = 0; i < wave->enemies.size(); i++)
+	for (int i = wave->enemies.size() - 1; i >= 0; i--)
 	{
 		if (wave->enemies[i]->reachedEndPoint)
 		{
@@ -107,34 +111,41 @@ void Level1::update(float deltaTime)
 		}
 	}
 
-	if (exitGate->health <= 0)
+	if (exitGate != nullptr && exitGate->health <= 0)
 	{
 		this->removeChild(exitGate);
-		exitGate = nullptr;
-		delete exitGate;
+		/*delete exitGate;
+		exitGate = nullptr;*/
 	}
 	if (grid->ghostTower != nullptr)
 	{
 		grid->ghostTower->moveWithMouse();
 	}
-	for (int i = 0; i < towers.size(); i++)
+	for(int i = towers.size() - 1; i >= 0; i--)
 	{
 		if (towers[i]->placed && wave->enemies.size() > 0)
 		{
+			int index = 0;
 			towers[i]->spawnProjectile();
-			towers[i]->targetEnemy(towers[i]->projectile->checkClosestEnemy(wave->enemies), deltaTime);
-			int index = towers[i]->projectile->checkCollision(towers[i]->projectile->checkClosestEnemy(wave->enemies));
-			this->addChild(towers[i]->projectile);
-			if (towers[i]->projectile->hitTarget)
+			if (towers[i]->projectile != nullptr)
 			{
+				index = towers[i]->projectile->checkCollision(towers[i]->projectile->checkClosestEnemy(wave->enemies));
+				towers[i]->targetEnemy(wave->enemies[index]->position, deltaTime);
+				this->addChild(towers[i]->projectile);
+			}
+			if (towers[i]->projectile != nullptr && towers[i]->projectile->dead)
+			{
+				if (towers[i]->projectile->hitTarget)
+				{
+					hud->money += 20;
+					this->removeChild(wave->enemies[index]);
+					delete wave->enemies[index];
+					wave->enemies.erase(wave->enemies.begin() + index);
+				}
 				this->removeChild(towers[i]->projectile);
 				delete towers[i]->projectile;
-				this->removeChild(wave->enemies[index]);
-				delete wave->enemies[index];
-				wave->enemies.erase(wave->enemies.begin() + index);
 				towers[i]->projectile = nullptr;
 				towers[i]->projectileSpawned = false;
-				hud->money += 20;
 			}
 		}
 		else if (wave->enemies.size() == 0 && towers[i]->projectile != nullptr)
@@ -142,6 +153,17 @@ void Level1::update(float deltaTime)
 			this->removeChild(towers[i]->projectile);
 			towers[i]->deleteProjectile();
 		}
+	}
+	if (wave->enemies.size() == 0 && !timerStarted)
+	{
+		t->start();
+		timerStarted = true;
+	}
+	if (t->seconds() > 4)
+	{
+		waveMade = false;
+		t->stop();
+		timerStarted = false;
 	}
 }
 

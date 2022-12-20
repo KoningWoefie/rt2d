@@ -3,6 +3,7 @@
 
 #include "tower.h"
 #include "bomb.h"
+#include "shape.h"
 
 class Bombtower : public Tower
 {
@@ -16,7 +17,7 @@ public:
 	virtual void spawnProjectile();
 
 private:
-
+	Shape* rangeCircle;
 };
 
 #endif

@@ -10,7 +10,6 @@
 #define LEVEL1_H
 
 #include <rt2d/scene.h>
-#include "myentity.h"
 #include "enemy.h"
 #include "gate.h"
 #include "wave.h"
@@ -55,12 +54,15 @@ private:
 
 	Hud* hud;
 
+	Timer* t;
+
 	ImageButton* button1;
 	ImageButton* button2;
 
 	bool entryGatePosXMade;
 	bool exitGatePosXMade;
 	bool waveMade;
+	bool timerStarted;
 	
 	float mousePosX;
 	float mousePosY;

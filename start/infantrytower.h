@@ -14,6 +14,7 @@ public:
 	virtual void update(float deltaTime);
 
 	void spawnProjectile();
+
 private:
 
 };

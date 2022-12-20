@@ -12,5 +12,5 @@ Bullet::~Bullet()
 
 void Bullet::update(float deltaTime)
 {
-
+	checkIfOutOfScreen();
 }

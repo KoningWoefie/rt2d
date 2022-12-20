@@ -17,7 +17,6 @@ Tower::~Tower()
 
 void Tower::update(float deltaTime)
 {
-
 }
 
 void Tower::moveWithMouse()
@@ -38,4 +37,5 @@ void Tower::deleteProjectile()
 {
 	projectile = nullptr;
 	delete projectile;
+	projectileSpawned = false;
 }

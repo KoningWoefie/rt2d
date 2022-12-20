@@ -6,7 +6,7 @@ Omnibar::Omnibar() : Entity()
 
 	this->addSprite("assets/omnibar.tga");
 	this->sprite()->color = WHITE;
-	this->position = Point3(0,8, 0);
+	this->position = Point3(SWIDTH - 128,8,0);
 }
 
 Omnibar::~Omnibar()

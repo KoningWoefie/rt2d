@@ -22,10 +22,20 @@ public:
 	//checks collision with the closest enemy
 	int checkCollision(Point3 target);
 
+	void checkIfOutOfScreen();
+
 	bool hitTarget;
+	bool dead;
 private:
 
 	int index;
+	bool outOfScreen;
+	bool rotated;
+	float currentRotation;
+
+protected:
+	Timer* lifeSpanTimer;
+	float lifeSpan;
 };
 
 #endif

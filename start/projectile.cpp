@@ -2,10 +2,16 @@
 
 Projectile::Projectile() : Entity()
 {
+	outOfScreen = true;
+	hitTarget = false;
+	rotated = false;
+	dead = false;
+	lifeSpan = 1;
+	lifeSpanTimer = new Timer();
+	currentRotation = 0;
 	this->addSprite("assets/BombTower.tga");
 	this->scale = Point(0.4, 0.4);
 	this->sprite()->color = WHITE;
-	hitTarget = false;
 	index = 0;
 }
 
@@ -16,7 +22,6 @@ Projectile::~Projectile()
 
 void Projectile::update(float deltaTime)
 {
-
 }
 
 //rotate towards target and move forward
@@ -26,12 +31,16 @@ void Projectile::moveToTarget(Point3 targetPosition, float deltaTime)
 	float diffX = this->position.x - targetPosition.x;
 	float diffY = this->position.y - targetPosition.y;
 	float angle = atan2(diffY, diffX);
-	if (length.getLength() > 1)
+	if (length.getLength() > 1 && targetPosition != Point3(0,0,0))
 	{
-		this->rotation.z = angle - 30;
-		float currentRotation = angle / PI * 180;
-		this->position.x += (cos(0.017453277777 * currentRotation)) * -13;
-		this->position.y += (sin(0.017453277777 * currentRotation)) * -13;
+		if (!rotated)
+		{
+			this->rotation.z = angle - 30;
+			currentRotation = angle / PI * 180;
+			rotated = true;
+		}
+		this->position.x += ((cos(0.017453277777 * currentRotation)) * -500) * deltaTime;
+		this->position.y += ((sin(0.017453277777 * currentRotation)) * -500) * deltaTime;
 	}
 }
 
@@ -42,12 +51,20 @@ Point3 Projectile::checkClosestEnemy(std::vector<Enemy*> enemies)
 	Point3 targetPosition;
 	for (int i = enemies.size() - 1; i >= 0; i--)
 	{
-		Vector2 tempLength = Vector2(this->position.x - enemies[i]->position.x, this->position.y - enemies[i]->position.y);
-		if (tempLength.getLengthSquared() < length.getLengthSquared())
+		if (!(enemies[i]->position.x < 0 || enemies[i]->position.x > SWIDTH || enemies[i]->position.y < 0 || enemies[i]->position.y > SHEIGHT))
 		{
-			length = tempLength;
-			targetPosition = enemies[i]->position;
-			index = i;
+			Vector2 tempLength = Vector2(this->position.x - enemies[i]->position.x, this->position.y - enemies[i]->position.y);
+			if (tempLength.getLengthSquared() < length.getLengthSquared())
+			{
+				length = tempLength;
+				targetPosition = enemies[i]->position;
+				index = i;
+			}
+			outOfScreen = false;
+		}
+		else
+		{
+			outOfScreen = true;
 		}
 	}
 	return targetPosition;
@@ -59,7 +76,16 @@ int Projectile::checkCollision(Point3 target)
 	Vector2 length = Vector2(this->position.x - target.x, this->position.y - target.y);
 	if (length.getLength() < 32)
 	{
+		dead = true;
 		hitTarget = true;
 	}
 	return index;
+}
+
+void Projectile::checkIfOutOfScreen()
+{
+	if (this->position.x < 0 || this->position.x > SWIDTH || this->position.y < 0 || this->position.y > SHEIGHT)
+	{
+		dead = true;
+	}
 }

@@ -21,4 +21,3 @@ private:
 	Point3 SpawnPosition;
 };
 #endif
-

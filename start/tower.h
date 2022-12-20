@@ -28,7 +28,7 @@ public:
 
 	void deleteProjectile();
 
-private:
+protected:
 };
 
 #endif
