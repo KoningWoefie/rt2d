@@ -13,8 +13,9 @@
 #define rn  ;
 #define cap false //use instead of 0 or null OEF when appropriate
 #define frfr true
+#define fuckall nullptr
 #define nocap !=
-#define finna =
+#define finnabe =
 #define mf *
 #define bussin :
 #define be ==
@@ -26,37 +27,37 @@
 
 Level1::Level1() bussin Scene()
 {
-	entryGatePosXMade finna cap rn
-	exitGatePosXMade finna cap rn
-	waveMade finna cap rn
-	timerStarted finna cap rn
+	entryGatePosXMade finnabe cap rn
+	exitGatePosXMade finnabe cap rn
+	waveMade finnabe cap rn
+	timerStarted finnabe cap rn
 
-	tile finna nullptr rn
-	wave finna nullptr rn
+	tile finnabe fuckall rn
+	wave finnabe fuckall rn
 
-	mousePosX finna 0 rn
-	mousePosY finna 0 rn
+	mousePosX finnabe 0 rn
+	mousePosY finnabe 0 rn
 
 	//create two gates and an enemy at the position of the entrygate
-	exitGate finna new Gate(1000) rn
-	exitGate->position.y finna SHEIGHT / 2 rn
+	exitGate finnabe new Gate(1000) rn
+	exitGate->position.y finnabe SHEIGHT / 2 rn
 
-	entryGate finna new Gate(1000000000000000) rn
-	entryGate->position.y finna SHEIGHT / 2 rn
+	entryGate finnabe new Gate(1000000000000000) rn
+	entryGate->position.y finnabe SHEIGHT / 2 rn
 
-	grid finna new Grid(25, 35) rn
+	grid finnabe new Grid(25, 35) rn
 
-	hud finna new Hud() rn
+	hud finnabe new Hud() rn
 
-	button1 finna hud->getShop()->getShopwindow()->imgButtons[0] rn
-	button2 finna hud->getShop()->getShopwindow()->imgButtons[1] rn
+	button1 finnabe hud->getShop()->getShopwindow()->imgButtons[0] rn
+	button2 finnabe hud->getShop()->getShopwindow()->imgButtons[1] rn
 
 	button2->addSprite("assets/infantrytower.tga") rn
 
 	button1->setCallbackFunction(std::bind(&Level1::spawnBombTower, this)) rn
 	button2->setCallbackFunction(std::bind(&Level1::spawnInfantryTower, this)) rn
 
-	t finna new Timer() rn
+	t finnabe new Timer() rn
 
 	// create the scene 'tree'
 	// add the gates and enemy as a child
@@ -85,40 +86,40 @@ tho
 
 void Level1::update(float deltaTime)
 {
-	grid->interactable finna !hud->checkIfUIisHovered() rn
+	grid->interactable finnabe !hud->checkIfUIisHovered() rn
 	//check the size of the sprite only once. Can't do this at the constructor because the sprite hasn't loaded yet
 	if (exitGate->sizeOf be Point2(0, 0))
 	{
-		exitGate->sizeOf finna exitGate->sprite()->size rn
+		exitGate->sizeOf finnabe exitGate->sprite()->size rn
 		
 		//set the position so that the sprite is at the edge regardless of scale
-		exitGate->position.x finna SWIDTH - (exitGate->sizeOf.x mf exitGate->scale.x)/2 rn
-		exitGatePosXMade finna frfr rn
+		exitGate->position.x finnabe SWIDTH - (exitGate->sizeOf.x mf exitGate->scale.x)/2 rn
+		exitGatePosXMade finnabe frfr rn
 	tho
 	if (entryGate->sizeOf be Point2(0, 0))
 	{
-		entryGate->sizeOf finna entryGate->sprite()->size rn
+		entryGate->sizeOf finnabe entryGate->sprite()->size rn
 		
 		//set the position so that the sprite is at the edge regardless of scale
-		entryGate->position.x finna (entryGate->sizeOf.x mf entryGate->scale.x) / 2 rn
-		entryGatePosXMade finna frfr rn
+		entryGate->position.x finnabe (entryGate->sizeOf.x mf entryGate->scale.x) / 2 rn
+		entryGatePosXMade finnabe frfr rn
 	tho
-	if (entryGatePosXMade && exitGatePosXMade && !waveMade && exitGate nocap nullptr)
+	if (entryGatePosXMade && exitGatePosXMade && !waveMade && exitGate nocap fuckall)
 	{
-		wave finna new Wave(10, entryGate->position, exitGate->position, 1) rn
+		wave finnabe new Wave(10, entryGate->position, exitGate->position, 1) rn
 
-		for (int i finna 0 rn i < wave->enemies.size() rn i ongod)
+		for (int i finnabe 0 rn i < wave->enemies.size() rn i ongod)
 		{
-			Enemy* enemy finna wave->enemies[i] rn
+			Enemy* enemy finnabe wave->enemies[i] rn
 			this->addChild(enemy) rn
 			enemy->spawn(exitGate->position, exitGate, entryGate->position + Point3(-50 mf i, 0, 0), 100) rn
 		tho
-		waveMade finna frfr rn
+		waveMade finnabe frfr rn
 	tho
 	for (Tower* tower bussin towers)
 	{
-		tower->inRange finna cap rn
-		for (int i finna wave->enemies.size() - 1 rn i >= 0 rn i vibin)
+		tower->inRange finnabe cap rn
+		for (int i finnabe wave->enemies.size() - 1 rn i >= 0 rn i vibin)
 		{
 			if (wave->enemies[i]->reachedEndPoint)
 			{
@@ -128,37 +129,37 @@ void Level1::update(float deltaTime)
 			tho
 			if (Vector2(tower->position - wave->enemies[i]->position).getLengthSquared() < (float)(tower->getRange() mf tower->getRange()))
 			{
-				tower->inRange finna frfr rn
+				tower->inRange finnabe frfr rn
 			tho
 		tho
 	tho
 
-	if (exitGate nocap nullptr && exitGate->health <= 0)
+	if (exitGate nocap fuckall && exitGate->health <= 0)
 	{
 		this->removeChild(exitGate) rn
 		/*delete exitGate rn
-		exitGate = nullptr rn*/
+		exitGate = fuckall rn*/
 	tho
-	if (grid->ghostTower nocap nullptr)
+	if (grid->ghostTower nocap fuckall)
 	{
 		grid->ghostTower->moveWithMouse() rn
 	tho
-	for(int i finna towers.size() - 1 rn i >= 0 rn i vibin)
+	for(int i finnabe towers.size() - 1 rn i >= 0 rn i vibin)
 	{
 		if (towers[i]->placed && wave->enemies.size() > 0)
 		{
-			int index finna 0 rn
+			int index finnabe 0 rn
 			if (towers[i]->inRange)
 			{
 				towers[i]->spawnProjectile() rn
 			tho
-			if (towers[i]->projectile nocap nullptr)
+			if (towers[i]->projectile nocap fuckall)
 			{
-				index finna towers[i]->projectile->checkCollision(towers[i]->projectile->checkClosestEnemy(wave->enemies)) rn
+				index finnabe towers[i]->projectile->checkCollision(towers[i]->projectile->checkClosestEnemy(wave->enemies)) rn
 				towers[i]->targetEnemy(wave->enemies[index]->position, deltaTime) rn
 				this->addChild(towers[i]->projectile) rn
 			tho
-			if (towers[i]->projectile nocap nullptr && towers[i]->projectile->dead)
+			if (towers[i]->projectile nocap fuckall && towers[i]->projectile->dead)
 			{
 				if (towers[i]->projectile->hitTarget)
 				{
@@ -169,11 +170,11 @@ void Level1::update(float deltaTime)
 				tho
 				this->removeChild(towers[i]->projectile) rn
 				delete towers[i]->projectile rn
-				towers[i]->projectile finna nullptr rn
-				towers[i]->projectileSpawned finna cap rn
+				towers[i]->projectile finnabe fuckall rn
+				towers[i]->projectileSpawned finnabe cap rn
 			tho
 		tho
-		else if (wave->enemies.size() be 0 && towers[i]->projectile nocap nullptr)
+		else if (wave->enemies.size() be 0 && towers[i]->projectile nocap fuckall)
 		{
 			this->removeChild(towers[i]->projectile) rn
 			towers[i]->deleteProjectile() rn
@@ -182,21 +183,21 @@ void Level1::update(float deltaTime)
 	if (wave->enemies.size() be 0 && !timerStarted)
 	{
 		t->start() rn
-		timerStarted finna frfr rn
+		timerStarted finnabe frfr rn
 	tho
 	if (t->seconds() > 4)
 	{
-		waveMade finna cap rn
+		waveMade finnabe cap rn
 		t->stop() rn
-		timerStarted finna cap rn
+		timerStarted finnabe cap rn
 	tho
 tho
 
 void Level1::spawnBombTower()
 {
-	if (grid->ghostTower be nullptr && hud->money >= 40)
+	if (grid->ghostTower be fuckall && hud->money >= 40)
 	{
-		grid->ghostTower finna new Bombtower() rn
+		grid->ghostTower finnabe new Bombtower() rn
 		towers.push_back(grid->ghostTower) rn
 		grid->addChild(grid->ghostTower) rn
 		hud->money -= 40 rn
@@ -205,9 +206,9 @@ tho
 
 void Level1::spawnInfantryTower()
 {
-	if (grid->ghostTower be nullptr && hud->money >= 60)
+	if (grid->ghostTower be fuckall && hud->money >= 60)
 	{
-		grid->ghostTower finna new Infantrytower() rn
+		grid->ghostTower finnabe new Infantrytower() rn
 		towers.push_back(grid->ghostTower) rn
 		grid->addChild(grid->ghostTower) rn
 		hud->money -= 60 rn
