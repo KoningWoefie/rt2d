@@ -8,6 +8,7 @@ Tower::Tower() : Entity()
 	this->projectile = nullptr;
 	this->projectileSpawned = false;
 	this->placed = false;
+	inRange = false;
 }
 
 Tower::~Tower()

@@ -6,6 +6,7 @@ Bombtower::Bombtower() : Tower()
 	rangeCircle = new Shape();
 	Line c1;
 	c1.createCircle(512, 18);
+	range = 256;
 	rangeCircle->addLine(&c1);
 	this->addChild(rangeCircle);
 }

@@ -3,6 +3,7 @@
 Infantrytower::Infantrytower() : Tower()
 {
 	this->addSprite("assets/infantrytower.tga");
+	range = 1000;
 }
 
 Infantrytower::~Infantrytower()

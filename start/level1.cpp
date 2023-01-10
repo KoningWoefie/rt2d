@@ -10,6 +10,7 @@
 
 #include "level1.h"
 
+
 Level1::Level1() : Scene()
 {
 	entryGatePosXMade = false;
@@ -101,13 +102,21 @@ void Level1::update(float deltaTime)
 		}
 		waveMade = true;
 	}
-	for (int i = wave->enemies.size() - 1; i >= 0; i--)
+	for (Tower* tower : towers)
 	{
-		if (wave->enemies[i]->reachedEndPoint)
+		tower->inRange = false;
+		for (int i = wave->enemies.size() - 1; i >= 0; i--)
 		{
-			this->removeChild(wave->enemies[i]);
-			delete wave->enemies[i];
-			wave->enemies.erase(wave->enemies.begin() + i);
+			if (wave->enemies[i]->reachedEndPoint)
+			{
+				this->removeChild(wave->enemies[i]);
+				delete wave->enemies[i];
+				wave->enemies.erase(wave->enemies.begin() + i);
+			}
+			if (Vector2(tower->position - wave->enemies[i]->position).getLengthSquared() < (float)(tower->getRange() * tower->getRange()))
+			{
+				tower->inRange = true;
+			}
 		}
 	}
 
@@ -126,7 +135,10 @@ void Level1::update(float deltaTime)
 		if (towers[i]->placed && wave->enemies.size() > 0)
 		{
 			int index = 0;
-			towers[i]->spawnProjectile();
+			if (towers[i]->inRange)
+			{
+				towers[i]->spawnProjectile();
+			}
 			if (towers[i]->projectile != nullptr)
 			{
 				index = towers[i]->projectile->checkCollision(towers[i]->projectile->checkClosestEnemy(wave->enemies));

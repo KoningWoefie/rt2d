@@ -26,9 +26,14 @@ public:
 
 	virtual void spawnProjectile();
 
+	virtual int getRange() { return range; };
+
 	void deleteProjectile();
 
+	bool inRange;
+
 protected:
+	int range;
 };
 
 #endif

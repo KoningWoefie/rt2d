@@ -16,8 +16,11 @@ public:
 
 	virtual void spawnProjectile();
 
+	int getRange() { return range; };
+
 private:
 	Shape* rangeCircle;
+	int range;
 };
 
 #endif
