@@ -1,10 +1,13 @@
 #include "grid.h"
 
-Grid::Grid(int cellAmountHeight, int cellAmountWidth)
+Grid::Grid(int cellAmountHeight, int cellAmountWidth, Enemy* enemy)
 {
 	ghostTower = nullptr;
+	loadingScreen = nullptr;
 	towerSpawned = false;
 	interactable = true;
+	fastEnemy = enemy;
+	doneLoading = false;
 	for (int y = 0; y < cellAmountHeight; y++)
 	{
 		for (int x = 0; x < cellAmountWidth; x++)
@@ -19,12 +22,18 @@ Grid::Grid(int cellAmountHeight, int cellAmountWidth)
 
 Grid::~Grid()
 {
-	for (int i = 0; i < tiles.size(); i++)
+	for (int i = tiles.size() - 1; i >= 0; i--)
 	{
 		this->removeChild(tiles[i]);
 		delete tiles[i];
 	}
 	tiles.clear();
+	for (int i = pathTiles.size() - 1; i >= 0; i--)
+	{
+		this->removeChild(pathTiles[i]);
+		delete pathTiles[i];
+	}
+	pathTiles.clear();
 }
 
 void Grid::update(float deltaTime)
@@ -32,6 +41,7 @@ void Grid::update(float deltaTime)
 	if (tiles.size() != 0)
 	{
 		checkTileSelectionWithMouse();
+		pathTileGeneration(fastEnemy);
 	}
 }
 
@@ -60,14 +70,32 @@ void Grid::checkTileSelectionWithMouse()
 					ghostTower->position = tile->position;
 					ghostTower->placed = true;
 					ghostTower = nullptr;
+					this->removeChild(tile);
+					tiles.erase(tiles.begin() + i);
 				}
-				this->removeChild(tile);
-				tiles.erase(tiles.begin() + i);
 			}
 		}
 		else
 		{
 			tile->sprite()->color = WHITE;
+		}
+	}
+}
+
+void Grid::pathTileGeneration(Enemy* enemy)
+{
+	if (enemy->reachedEndPoint)
+	{
+		doneLoading = true;
+	}
+	for (int i = tiles.size() - 1; i >= 0; i--)
+	{
+		Tile* tile = tiles[i];
+		if (Vector2(tile->position.x - enemy->position.x, tile->position.y - enemy->position.y).getLengthSquared() < 16 * 16)
+		{
+			tile->addSprite("assets/path.tga");
+			tiles.erase(tiles.begin() + i);
+			pathTiles.push_back(tile);
 		}
 	}
 }

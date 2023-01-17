@@ -6,8 +6,8 @@
  * @brief description of MyEntity behavior.
  */
 
-#ifndef MYENTITY_H
-#define MYENTITY_H
+#ifndef SHAPE_H
+#define SHAPE_H
 
 #include <rt2d/entity.h>
 

@@ -21,6 +21,7 @@
 #include "infantrytower.h"
 #include "hud.h"
 #include "imagebutton.h"
+#include "basicentity.h"
 
 /// @brief The Level1 class is the Scene implementation.
 class Level1 : public Scene
@@ -47,6 +48,8 @@ private:
 	Gate* exitGate;
 	Gate* entryGate;
 
+	Enemy* fastEnemy;
+
 	Grid* grid;
 
 	///
@@ -68,6 +71,11 @@ private:
 	float mousePosY;
 
 	std::vector<Tower*> towers;
+
+	BasicEntity* loadingScreen;
+	BasicEntity* background;
+
+	int enemiesPerWave;
 };				 
 
 #endif /* SCENE00_H */

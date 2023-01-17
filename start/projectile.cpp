@@ -35,12 +35,11 @@ void Projectile::moveToTarget(Point3 targetPosition, float deltaTime)
 	{
 		if (!rotated)
 		{
-			this->rotation.z = angle - 30;
-			currentRotation = angle / PI * 180;
+			this->rotation.z = angle;
 			rotated = true;
 		}
-		this->position.x += ((cos(0.017453277777 * currentRotation)) * -500) * deltaTime;
-		this->position.y += ((sin(0.017453277777 * currentRotation)) * -500) * deltaTime;
+		this->position.x += ((cos(this->rotation.z)) * -1500) * deltaTime;
+		this->position.y += ((sin(this->rotation.z)) * -1500) * deltaTime;
 	}
 }
 

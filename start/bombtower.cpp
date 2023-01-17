@@ -9,6 +9,9 @@ Bombtower::Bombtower() : Tower()
 	range = 256;
 	rangeCircle->addLine(&c1);
 	this->addChild(rangeCircle);
+	cooldownPassed = false;
+	cooldown = new Timer();
+	cooldown->start();
 }
 
 Bombtower::~Bombtower()
@@ -23,10 +26,17 @@ void Bombtower::update(float deltaTime)
 
 void Bombtower::spawnProjectile()
 {
-	if (!projectileSpawned)
+	if (cooldown->seconds() > 0.7f)
+	{
+		cooldownPassed = true;
+	}
+	if (!projectileSpawned && cooldownPassed)
 	{
 		projectile = new Bomb();
 		projectile->position = this->position;
 		projectileSpawned = true;
+		cooldown->stop();
+		cooldown->start();
+		cooldownPassed = false;
 	}
 }

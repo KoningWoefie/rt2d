@@ -34,6 +34,8 @@ public:
 
 protected:
 	int range;
+	bool cooldownPassed;
+	Timer* cooldown;
 };
 
 #endif
