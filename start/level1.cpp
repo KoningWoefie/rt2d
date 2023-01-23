@@ -17,6 +17,7 @@ Level1::Level1() : Scene()
 	exitGatePosXMade = false;
 	waveMade = false;
 	timerStarted = false;
+	ended = false;
 
 	tile = nullptr;
 	wave = nullptr;
@@ -25,21 +26,22 @@ Level1::Level1() : Scene()
 	mousePosY = 0;
 
 	enemiesPerWave = 10;
+	enemySpeed = 200;
 
 	//create two gates and an enemy at the position of the entrygate
-	exitGate = new Gate(1100);
+	exitGate = new Gate(1200);
 	exitGate->position.y = SHEIGHT / 2;
 
 	entryGate = new Gate(1000000000000000);
 	entryGate->position.y = SHEIGHT / 2;
 
-	Wave* testWave = new Wave(1, entryGate->position, exitGate->position, 10);
-	fastEnemy = testWave->enemies[0];
+	Wave* loadingWave = new Wave(1, entryGate->position, exitGate->position, 10);
+	fastEnemy = loadingWave->enemies[0];
 	fastEnemy->spawn(Point3(SWIDTH,SHEIGHT/2,0), exitGate, Point3(0, SHEIGHT/2,0), 400);
 
 	grid = new Grid(25, 35, fastEnemy);
 
-	hud = new Hud();
+	hud = new Hud(exitGate);
 
 	button1 = hud->getShop()->getShopwindow()->imgButtons[0];
 	button2 = hud->getShop()->getShopwindow()->imgButtons[1];
@@ -63,7 +65,6 @@ Level1::Level1() : Scene()
 	background->position = Point3(SWIDTH / 2, SHEIGHT / 2, 0);
 
 	// create the scene 'tree'
-	// add the gates and enemy as a child
 	this->addChild(grid);
 	this->addChild(fastEnemy);
 	this->addChild(exitGate);
@@ -128,7 +129,7 @@ void Level1::update(float deltaTime)
 	}
 	if (grid->doneLoading)
 	{
-		if (entryGatePosXMade && exitGatePosXMade && !waveMade && exitGate != nullptr)
+		if (entryGatePosXMade && exitGatePosXMade && !waveMade && exitGate != nullptr && !ended)
 		{
 			wave = new Wave(enemiesPerWave, entryGate->position, exitGate->position, 1);
 
@@ -136,9 +137,13 @@ void Level1::update(float deltaTime)
 			{
 				Enemy* enemy = wave->enemies[i];
 				this->addChild(enemy);
-				enemy->spawn(exitGate->position, exitGate, entryGate->position + Point3(-50 * i, 0, 0), 200);
+				enemy->spawn(exitGate->position, exitGate, entryGate->position + Point3(-50 * i, 0, 0), enemySpeed);
 			}
 			enemiesPerWave += 5;
+			if (enemySpeed < 500)
+			{
+				enemySpeed += 30;
+			}
 			waveMade = true;
 		}
 		for (Tower* tower : towers)
@@ -146,16 +151,19 @@ void Level1::update(float deltaTime)
 			tower->inRange = false;
 			for (int i = wave->enemies.size() - 1; i >= 0; i--)
 			{
-				if (wave->enemies[i]->reachedEndPoint)
-				{
-					this->removeChild(wave->enemies[i]);
-					delete wave->enemies[i];
-					wave->enemies.erase(wave->enemies.begin() + i);
-				}
 				if (Vector2(tower->position - wave->enemies[i]->position).getLengthSquared() < (float)(tower->getRange() * tower->getRange()))
 				{
 					tower->inRange = true;
 				}
+			}
+		}
+		for (int i = wave->enemies.size() - 1; i >= 0; i--)
+		{
+			if (wave->enemies[i]->reachedEndPoint)
+			{
+				this->removeChild(wave->enemies[i]);
+				delete wave->enemies[i];
+				wave->enemies.erase(wave->enemies.begin() + i);
 			}
 		}
 
@@ -164,6 +172,7 @@ void Level1::update(float deltaTime)
 			this->removeChild(exitGate);
 			/*delete exitGate;
 			exitGate = nullptr;*/
+			ended = true;
 		}
 		if (grid->ghostTower != nullptr)
 		{
@@ -188,7 +197,7 @@ void Level1::update(float deltaTime)
 				{
 					if (towers[i]->projectile->hitTarget)
 					{
-						hud->money += 20;
+						hud->moneyChange += 5;
 						this->removeChild(wave->enemies[index]);
 						delete wave->enemies[index];
 						wave->enemies.erase(wave->enemies.begin() + index);
@@ -221,22 +230,22 @@ void Level1::update(float deltaTime)
 
 void Level1::spawnBombTower()
 {
-	if (grid->ghostTower == nullptr && hud->money >= 40)
+	if (grid->ghostTower == nullptr && hud->money >= 60)
 	{
 		grid->ghostTower = new Bombtower();
 		towers.push_back(grid->ghostTower);
 		grid->addChild(grid->ghostTower);
-		hud->money -= 40;
+		hud->money -= 60;
 	}
 }
 
 void Level1::spawnInfantryTower()
 {
-	if (grid->ghostTower == nullptr && hud->money >= 60)
+	if (grid->ghostTower == nullptr && hud->money >= 100)
 	{
 		grid->ghostTower = new Infantrytower();
 		towers.push_back(grid->ghostTower);
 		grid->addChild(grid->ghostTower);
-		hud->money -= 60;
+		hud->money -= 100;
 	}
 }

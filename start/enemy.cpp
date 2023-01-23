@@ -22,10 +22,6 @@ void Enemy::update(float deltaTime)
 	{
 		this->move(TargetPosition, localGate, velo, deltaTime);
 	}
-	else
-	{
-	
-	}
 }
 
 void Enemy::move(Point3 targetPosition, Gate* gate, int speed, float deltaTime)

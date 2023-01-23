@@ -76,6 +76,9 @@ private:
 	BasicEntity* background;
 
 	int enemiesPerWave;
+
+	bool ended;
+	int enemySpeed;
 };				 
 
 #endif /* SCENE00_H */
