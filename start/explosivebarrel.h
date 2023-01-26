@@ -1,27 +1,24 @@
-#ifndef ENEMY_H
-#define ENEMY_H
+#ifndef EXPLOSIVEBARREL_H
+#define EXPLOSIVEBARREL_H
 
-#include <rt2d/entity.h>
+#include "enemy.h"
 #include "gate.h"
-class Enemy : public Entity
+class ExplosiveBarrel : public Enemy
 {
 public:
-	Enemy();
+	ExplosiveBarrel();
 
-	virtual ~Enemy();
+	virtual ~ExplosiveBarrel();
 
 	virtual void update(float deltaTime);
-
-	void move(Point3 position, Gate* gate, int speed, float deltaTime);
 
 	virtual void spawn(Point3 targetPosition, Gate* gate, Point3 spawnPosition, int speed);
 
 	bool reachedEndPoint;
 
-protected:
+private:
 	Point3 TargetPosition;
 	Gate* localGate;
-	std::vector<Gate*> _checkPoints;
 	int velo;
 };
 

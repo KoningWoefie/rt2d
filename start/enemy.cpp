@@ -26,6 +26,7 @@ void Enemy::update(float deltaTime)
 
 void Enemy::move(Point3 targetPosition, Gate* gate, int speed, float deltaTime)
 {
+	
 	Vector2 length = Vector2(this->position.x - targetPosition.x, this->position.y - targetPosition.y);
 	if (length.getLength() < 4)
 	{
@@ -40,8 +41,5 @@ void Enemy::move(Point3 targetPosition, Gate* gate, int speed, float deltaTime)
 
 void Enemy::spawn(Point3 targetPosition, Gate* gate, Point3 spawnPosition, int speed)
 {
-	this->position = spawnPosition;
-	TargetPosition = targetPosition;
-	localGate = gate;
-	velo = speed;
+
 }

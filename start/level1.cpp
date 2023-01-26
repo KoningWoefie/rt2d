@@ -89,6 +89,14 @@ Level1::~Level1()
 	delete exitGate;
 	delete entryGate;
 	delete hud;
+	delete t;
+
+	grid = nullptr;
+	wave = nullptr;
+	exitGate = nullptr;
+	entryGate = nullptr;
+	hud = nullptr;
+	t = nullptr;
 }
 
 void Level1::update(float deltaTime)
@@ -102,9 +110,11 @@ void Level1::update(float deltaTime)
 		this->removeChild(fastEnemy);
 		this->removeChild(loadingScreen);
 		this->removeChild(background);
+
 		delete fastEnemy;
 		delete loadingScreen;
 		delete background;
+
 		fastEnemy = nullptr;
 		loadingScreen = nullptr;
 		background = nullptr;

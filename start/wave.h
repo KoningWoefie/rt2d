@@ -1,7 +1,8 @@
 #ifndef WAVE_H
 #define WAVE_H
 
-#include "enemy.h"
+#include "ship.h"
+#include "explosivebarrel.h"
 #include <iostream>
 
 class Wave
@@ -16,7 +17,8 @@ public:
 	std::vector<Enemy*> enemies;
 
 private:
-	Enemy* enemy;
+	Ship* ship;
+	ExplosiveBarrel* barrel;
 
 	Point3 SpawnPosition;
 };
