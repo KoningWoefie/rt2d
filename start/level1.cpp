@@ -69,7 +69,9 @@ Level1::Level1() : Scene()
 	hud = new Hud(exitGate);
 
 	button1 = hud->getShop()->getShopwindow()->imgButtons[0];
+	hud->getShop()->getShopwindow()->imgButtons[0]->textbox->message("50");
 	button2 = hud->getShop()->getShopwindow()->imgButtons[1];
+	hud->getShop()->getShopwindow()->imgButtons[1]->textbox->message("200");
 
 	button2->addSprite("assets/infantrytower.tga");
 
@@ -187,6 +189,7 @@ void Level1::update(float deltaTime)
 			}
 			waveMade = true;
 			waveNumber++;
+			hud->setWaveCounter(waveNumber);
 		}
 		for (Tower* tower : towers)
 		{

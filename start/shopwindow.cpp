@@ -12,6 +12,8 @@ Shopwindow::Shopwindow(Point3 spawnPos) : Entity()
 		imgbutt->rotation.z = PI;
 		imgbutt->rotation.y = PI;
 		imgbutt->position = Point3(-64 + i * 128, -192);
+		imgbutt->textbox->position = Point3(imgbutt->position.x + 56 - 132 * i, imgbutt->position.y + 115, 0);
+		imgbutt->textbox->rotation.x = PI;
 		imgButtons.push_back(imgbutt);
 		this->addChild(imgbutt);
 	}

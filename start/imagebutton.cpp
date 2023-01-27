@@ -42,7 +42,6 @@ void ImageButton::update(float deltaTime)
 			hovered = true;
 			if (input()->getMouseDown(0)) {
 				ButtonState = 2;
-				textbox->position = Point2(textbox->position.x, 32);
 
 				if (_CallbackFunction != NULL) {
 					_CallbackFunction();
@@ -51,17 +50,14 @@ void ImageButton::update(float deltaTime)
 
 			if (ButtonState == 0 || input()->getMouseUp(0)) {
 				ButtonState = 1;
-				textbox->position = Point2(textbox->position.x, 28);
 			}
 		}
 		else {
 			ButtonState = 0;
 			hovered = false;
-			textbox->position = Point2(textbox->position.x, 28);
 		}
 	}
 	else {
-		textbox->position = Point2(textbox->position.x, 28);
 	}
 
 	switch (ButtonState) {

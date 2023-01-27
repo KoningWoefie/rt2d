@@ -9,16 +9,20 @@ Hud::Hud(Gate* endGate) : Entity()
 	moneyChangeBox = new Text();
 	moneyChangeBox->position = Point3(60, 72);
 	moneyChangeBox->scale = Point(0.5f, 0.5f);
+	waveCounter = new Text();
+	waveCounter->position = Point3(SWIDTH/2 - 128, 32);
 	shop = new Shop();
 	healthBar = new Bar(1000, endGate);
 	this->addChild(shop);
 	this->addChild(moneyBox);
 	this->addChild(moneyChangeBox);
 	this->addChild(healthBar);
+	this->addChild(waveCounter);
 	UIelements.push_back(shop);
 	UIelements.push_back(moneyBox);
 	UIelements.push_back(moneyChangeBox);
 	UIelements.push_back(healthBar);
+	UIelements.push_back(waveCounter);
 }
 
 Hud::~Hud()
