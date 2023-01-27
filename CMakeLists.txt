@@ -158,8 +158,16 @@ IF(MAKE_START)
 	
 	add_executable(${PROJECTNAME}
 		start/main.cpp
-		start/myentity.cpp
-		start/myentity.h
+		start/shape.cpp
+		start/shape.h
+		start/ship.cpp
+		start/ship.h
+		start/explosivebarrel.cpp
+		start/explosivebarrel.h
+		start/particle.cpp
+		start/particle.h
+		start/bar.cpp
+		start/bar.h
 		start/level1.cpp
 		start/level1.h
 		start/enemy.cpp
@@ -194,6 +202,8 @@ IF(MAKE_START)
 		start/shopwindow.h
 		start/omnibar.cpp
 		start/omnibar.h
+		start/basicentity.cpp
+		start/basicentity.h
 	)
 	target_link_libraries(${PROJECTNAME}
 		${ALL_GRAPHICS_LIBS}
