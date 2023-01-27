@@ -9,15 +9,17 @@ Wave::Wave(int enemiesPerWave, Point3 spawnPosition, Point3 targetPosition, int 
 		this->SpawnPosition += Point3(-200 * i, 0, 0);
 		if (i & 1)
 		{
-			barrel = new ExplosiveBarrel();
+			ExplosiveBarrel* barrel = new ExplosiveBarrel();
 			barrel->scale = Point(0.5, 0.5);
 			enemies.push_back(barrel);
+			barrel = nullptr;
 		}
 		else
 		{
-			ship = new Ship();
+			Ship* ship = new Ship();
 			ship->scale = Point(0.5, 0.5);
 			enemies.push_back(ship);
+			ship = nullptr;
 		}
 	}
 }

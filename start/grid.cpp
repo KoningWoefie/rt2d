@@ -3,7 +3,6 @@
 Grid::Grid(int cellAmountHeight, int cellAmountWidth, Enemy* enemy)
 {
 	ghostTower = nullptr;
-	loadingScreen = nullptr;
 	towerSpawned = false;
 	interactable = true;
 	fastEnemy = enemy;

@@ -11,13 +11,20 @@
 
 #include <rt2d/entity.h>
 
-/// @brief The MyEntity class is the Entity implementation.
+/// <summary>
+/// for displaying shapes
+/// </summary>
 class Shape : public Entity
 {
 public:
-
+	/// <summary>
+	/// constructor
+	/// </summary>
 	Shape();
 
+	/// <summary>
+	/// destructor
+	/// </summary>
 	virtual ~Shape();
 
 	virtual void update(float deltaTime);

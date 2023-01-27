@@ -8,7 +8,6 @@ Projectile::Projectile() : Entity()
 	dead = false;
 	lifeSpan = 1;
 	lifeSpanTimer = new Timer();
-	currentRotation = 0;
 	this->addSprite("assets/BombTower.tga");
 	this->scale = Point(0.4, 0.4);
 	this->sprite()->color = WHITE;

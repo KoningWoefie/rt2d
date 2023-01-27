@@ -37,43 +37,98 @@ public:
 	/// @return void
 	virtual void update(float deltaTime);
 
+	/// <summary>
+	/// spawns bombtower when button is pressed
+	/// </summary>
 	void spawnBombTower();
 
+	/// <summary>
+	/// spawns infantrytower when button is pressed
+	/// </summary>
 	void spawnInfantryTower();
 
 private:
+	/// <summary>
+	/// wave of enemies
+	/// </summary>
 	Wave* wave;
 	
-	///
+	/// <summary>
+	/// exitgate/endposition
+	/// </summary>
 	Gate* exitGate;
+	/// <summary>
+	/// entrygate/startposition
+	/// </summary>
 	Gate* entryGate;
 
+	/// <summary>
+	/// first enemy that spawns for path generation
+	/// </summary>
 	Enemy* fastEnemy;
 
+	/// <summary>
+	/// grid that you can place towers in
+	/// </summary>
 	Grid* grid;
 
-	///
+	/// <summary>
+	/// the thing in the grid
+	/// </summary>
 	Tile* tile;
 
 	Hud* hud;
 
+	/// <summary>
+	/// timer
+	/// </summary>
 	Timer* t;
 
+	/// <summary>
+	/// first button in shop
+	/// </summary>
 	ImageButton* button1;
+	/// <summary>
+	/// second button in shop
+	/// </summary>
 	ImageButton* button2;
 
+	/// <summary>
+	/// true when the entrygate has the correct x position
+	/// </summary>
 	bool entryGatePosXMade;
+	/// <summary>
+	/// true when the entrygate has the correct x position
+	/// </summary>
 	bool exitGatePosXMade;
+	/// <summary>
+	/// true when wave is already made and false when new wave needs to be made
+	/// </summary>
 	bool waveMade;
+	/// <summary>
+	/// true when timer already started
+	/// </summary>
 	bool timerStarted;
 	
 	float mousePosX;
 	float mousePosY;
 
+	/// <summary>
+	/// list of all active towers
+	/// </summary>
 	std::vector<Tower*> towers;
+	/// <summary>
+	/// list of all checkpoints
+	/// </summary>
 	std::vector<Entity*> cps;
 
+	/// <summary>
+	/// loading screen (displayed when path is generating)
+	/// </summary>
 	BasicEntity* loadingScreen;
+	/// <summary>
+	/// background for the loading screen
+	/// </summary>
 	BasicEntity* background;
 
 	BasicEntity* cp1;
@@ -83,11 +138,23 @@ private:
 	BasicEntity* cp5;
 	BasicEntity* cp6;
 
+	/// <summary>
+	/// enemies per wave increases 5 per time
+	/// </summary>
 	int enemiesPerWave;
 
+	/// <summary>
+	/// true when you lost
+	/// </summary>
 	bool ended;
 
+	/// <summary>
+	/// value of the enemyspeed
+	/// </summary>
 	int enemySpeed;
+	/// <summary>
+	/// current wave number
+	/// </summary>
 	int waveNumber;
 };				 
 
