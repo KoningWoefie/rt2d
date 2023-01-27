@@ -27,17 +27,42 @@ Level1::Level1() : Scene()
 
 	enemiesPerWave = 10;
 	enemySpeed = 200;
+	waveNumber = 0;
 
 	//create two gates and an enemy at the position of the entrygate
 	exitGate = new Gate(1200);
 	exitGate->position.y = SHEIGHT / 2;
+	exitGate->position.x = SWIDTH;
 
 	entryGate = new Gate(1000000000000000);
 	entryGate->position.y = SHEIGHT / 2;
+	entryGate->position.x = 0;
+
+	cp1 = new BasicEntity;
+	cp2 = new BasicEntity;
+	cp3 = new BasicEntity;
+	cp4 = new BasicEntity;
+	cp5 = new BasicEntity;
+	cp6 = new BasicEntity;
+
+	cp1->position = Point3(SWIDTH / 6 - 16, SHEIGHT/2);
+	cp2->position = Point3(SWIDTH / 6 - 16, SHEIGHT / 4);
+	cp3->position = Point3(SWIDTH / 6 * 2 - 16, SHEIGHT / 4);
+	cp4->position = Point3(SWIDTH / 6 * 2 - 16, SHEIGHT / 4 * 3);
+	cp5->position = Point3(SWIDTH / 6 * 4 - 16, SHEIGHT / 4 * 3);
+	cp6->position = Point3(SWIDTH / 6 * 4 - 16, SHEIGHT / 2);
+
+	cps.push_back(cp1);
+	cps.push_back(cp2);
+	cps.push_back(cp3);
+	cps.push_back(cp4);
+	cps.push_back(cp5);
+	cps.push_back(cp6);
+	cps.push_back(exitGate);
 
 	Wave* loadingWave = new Wave(1, entryGate->position, exitGate->position, 10);
 	fastEnemy = loadingWave->enemies[0];
-	fastEnemy->spawn(Point3(SWIDTH,SHEIGHT/2,0), exitGate, Point3(0, SHEIGHT/2,0), 400);
+	fastEnemy->spawn(cps, exitGate, Point3(0, SHEIGHT/2,0), 400);
 
 	grid = new Grid(25, 35, fastEnemy);
 
@@ -78,7 +103,15 @@ Level1::Level1() : Scene()
 Level1::~Level1()
 {
 	// deconstruct and delete the Tree
-	this->removeChild(exitGate);
+	for (Entity* cp : cps)
+	{
+		if (cp->parent() != nullptr)
+		{
+			this->removeChild(cp);
+			delete cp;
+			cp = nullptr;
+		}
+	}
 	this->removeChild(entryGate);
 	this->removeChild(grid);
 	this->removeChild(hud);
@@ -86,14 +119,12 @@ Level1::~Level1()
 	// delete the gates and enemy from the heap (there was a 'new' in the constructor)
 	delete grid;
 	delete wave;
-	delete exitGate;
 	delete entryGate;
 	delete hud;
 	delete t;
 
 	grid = nullptr;
 	wave = nullptr;
-	exitGate = nullptr;
 	entryGate = nullptr;
 	hud = nullptr;
 	t = nullptr;
@@ -147,14 +178,15 @@ void Level1::update(float deltaTime)
 			{
 				Enemy* enemy = wave->enemies[i];
 				this->addChild(enemy);
-				enemy->spawn(exitGate->position, exitGate, entryGate->position + Point3(-50 * i, 0, 0), enemySpeed);
+				enemy->spawn(cps, exitGate, entryGate->position + Point3(-50 * i, 0, 0), enemySpeed);
 			}
 			enemiesPerWave += 5;
-			if (enemySpeed < 500)
+			if (enemySpeed < 350)
 			{
 				enemySpeed += 30;
 			}
 			waveMade = true;
+			waveNumber++;
 		}
 		for (Tower* tower : towers)
 		{
@@ -171,8 +203,8 @@ void Level1::update(float deltaTime)
 		{
 			if (wave->enemies[i]->reachedEndPoint)
 			{
-				this->removeChild(wave->enemies[i]);
 				delete wave->enemies[i];
+				this->removeChild(wave->enemies[i]);
 				wave->enemies.erase(wave->enemies.begin() + i);
 			}
 		}
@@ -208,8 +240,8 @@ void Level1::update(float deltaTime)
 					if (towers[i]->projectile->hitTarget)
 					{
 						hud->moneyChange += 5;
-						this->removeChild(wave->enemies[index]);
 						delete wave->enemies[index];
+						this->removeChild(wave->enemies[index]);
 						wave->enemies.erase(wave->enemies.begin() + index);
 					}
 					this->removeChild(towers[i]->projectile);
@@ -236,26 +268,30 @@ void Level1::update(float deltaTime)
 			timerStarted = false;
 		}
 	}
+	if (input()->getKeyDown(KeyCode::Space))
+	{
+		std::cout << "yes" << std::endl;
+	}
 }
 
 void Level1::spawnBombTower()
 {
-	if (grid->ghostTower == nullptr && hud->money >= 60)
+	if (grid->ghostTower == nullptr && hud->money >= 50)
 	{
 		grid->ghostTower = new Bombtower();
 		towers.push_back(grid->ghostTower);
 		grid->addChild(grid->ghostTower);
-		hud->money -= 60;
+		hud->money -= 50;
 	}
 }
 
 void Level1::spawnInfantryTower()
 {
-	if (grid->ghostTower == nullptr && hud->money >= 100)
+	if (grid->ghostTower == nullptr && hud->money >= 200)
 	{
 		grid->ghostTower = new Infantrytower();
 		towers.push_back(grid->ghostTower);
 		grid->addChild(grid->ghostTower);
-		hud->money -= 100;
+		hud->money -= 200;
 	}
 }

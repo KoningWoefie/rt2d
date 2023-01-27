@@ -12,21 +12,27 @@ ExplosiveBarrel::ExplosiveBarrel() : Enemy()
 
 ExplosiveBarrel::~ExplosiveBarrel()
 {
-
+	for(int i = 0; i <= 50; i++)
+	{
+		Particle* p = new Particle(2*PI/50*i);
+		this->parent()->addChild(p);
+		p->position = this->position;
+		p = nullptr;
+	}
 }
 
 void ExplosiveBarrel::update(float deltaTime)
 {
 	if (localGate != nullptr)
 	{
-		this->move(TargetPosition, localGate, velo, deltaTime);
+		this->move(localGate, velo, deltaTime);
 	}
 }
 
-void ExplosiveBarrel::spawn(Point3 targetPosition, Gate* gate, Point3 spawnPosition, int speed)
+void ExplosiveBarrel::spawn(std::vector<Entity*> checkpoints, Gate* gate, Point3 spawnPosition, int speed)
 {
 	this->position = spawnPosition;
-	TargetPosition = targetPosition;
+	_checkPoints = checkpoints;
 	localGate = gate;
 	velo = speed;
 }

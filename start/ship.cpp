@@ -18,14 +18,14 @@ void Ship::update(float deltaTime)
 {
 	if (localGate != nullptr)
 	{
-		this->move(TargetPosition, localGate, velo, deltaTime);
+		this->move(localGate, velo, deltaTime);
 	}
 }
 
-void Ship::spawn(Point3 targetPosition, Gate* gate, Point3 spawnPosition, int speed)
+void Ship::spawn(std::vector<Entity*> checkpoints, Gate* gate, Point3 spawnPosition, int speed)
 {
 	this->position = spawnPosition;
-	TargetPosition = targetPosition;
+	_checkPoints = checkpoints;
 	localGate = gate;
 	velo = speed;
 }

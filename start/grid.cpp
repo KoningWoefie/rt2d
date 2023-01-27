@@ -88,14 +88,17 @@ void Grid::pathTileGeneration(Enemy* enemy)
 	{
 		doneLoading = true;
 	}
-	for (int i = tiles.size() - 1; i >= 0; i--)
+	if (!doneLoading)
 	{
-		Tile* tile = tiles[i];
-		if (Vector2(tile->position.x - enemy->position.x, tile->position.y - enemy->position.y).getLengthSquared() < 16 * 16)
+		for (int i = tiles.size() - 1; i >= 0; i--)
 		{
-			tile->addSprite("assets/path.tga");
-			tiles.erase(tiles.begin() + i);
-			pathTiles.push_back(tile);
+			Tile* tile = tiles[i];
+			if (Vector2(tile->position.x - enemy->position.x, tile->position.y - enemy->position.y).getLengthSquared() < 32 * 32)
+			{
+				tile->addSprite("assets/path.tga");
+				tiles.erase(tiles.begin() + i);
+				pathTiles.push_back(tile);
+			}
 		}
 	}
 }

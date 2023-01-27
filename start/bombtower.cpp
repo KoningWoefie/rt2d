@@ -26,7 +26,7 @@ void Bombtower::update(float deltaTime)
 
 void Bombtower::spawnProjectile()
 {
-	if (cooldown->seconds() > 0.7f)
+	if (cooldown->seconds() > 1.3f)
 	{
 		cooldownPassed = true;
 	}

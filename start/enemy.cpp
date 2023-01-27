@@ -9,6 +9,7 @@ Enemy::Enemy() : Entity()
 	velo = 0;
 	localGate = nullptr;
 	reachedEndPoint = false;
+	checkPointReached = false;
 }
 
 Enemy::~Enemy()
@@ -20,26 +21,51 @@ void Enemy::update(float deltaTime)
 {
 	if (localGate != nullptr)
 	{
-		this->move(TargetPosition, localGate, velo, deltaTime);
+		this->move(localGate, velo, deltaTime);
 	}
 }
 
-void Enemy::move(Point3 targetPosition, Gate* gate, int speed, float deltaTime)
+void Enemy::move(Gate* gate, int speed, float deltaTime)
 {
-	
+	Point3 targetPosition = _checkPoints[0]->position;
 	Vector2 length = Vector2(this->position.x - targetPosition.x, this->position.y - targetPosition.y);
-	if (length.getLength() < 4)
+	if (length.getLength() < 10 && _checkPoints.size() == 1)
 	{
 		gate->health -= 100;
 		reachedEndPoint = true;
 	}
+	else if(length.getLength() < 10)
+	{
+		checkPointReached = true;
+		_checkPoints.erase(_checkPoints.begin());
+	}
 	else
 	{
-		this->position.x += speed * deltaTime;
+		if (abs(_checkPoints[0]->position.y - this->position.y) > abs(_checkPoints[0]->position.x - this->position.x))
+		{
+			if (_checkPoints[0]->position.y - this->position.y > 0)
+			{
+				this->position.y += speed * deltaTime;
+			}
+			else
+			{
+				this->position.y -= speed * deltaTime;
+			}
+		}
+		else
+		{
+			if (_checkPoints[0]->position.x - this->position.x > 0)
+			{
+				this->position.x += speed * deltaTime;
+			}
+			else
+			{
+				this->position.x -= speed * deltaTime;
+			}
+		}
 	}
 }
 
-void Enemy::spawn(Point3 targetPosition, Gate* gate, Point3 spawnPosition, int speed)
+void Enemy::spawn(std::vector<Entity*> checkpoints, Gate* gate, Point3 spawnPosition, int speed)
 {
-
 }

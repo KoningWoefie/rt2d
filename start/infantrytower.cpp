@@ -21,7 +21,7 @@ void Infantrytower::update(float deltaTime)
 
 void Infantrytower::spawnProjectile()
 {
-	if (cooldown->seconds() > 1)
+	if (cooldown->seconds() > 3)
 	{
 		cooldownPassed = true;
 	}

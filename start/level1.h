@@ -71,14 +71,24 @@ private:
 	float mousePosY;
 
 	std::vector<Tower*> towers;
+	std::vector<Entity*> cps;
 
 	BasicEntity* loadingScreen;
 	BasicEntity* background;
 
+	BasicEntity* cp1;
+	BasicEntity* cp2;
+	BasicEntity* cp3;
+	BasicEntity* cp4;
+	BasicEntity* cp5;
+	BasicEntity* cp6;
+
 	int enemiesPerWave;
 
 	bool ended;
+
 	int enemySpeed;
+	int waveNumber;
 };				 
 
 #endif /* SCENE00_H */

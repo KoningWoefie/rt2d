@@ -73,7 +73,7 @@ Point3 Projectile::checkClosestEnemy(std::vector<Enemy*> enemies)
 int Projectile::checkCollision(Point3 target)
 {
 	Vector2 length = Vector2(this->position.x - target.x, this->position.y - target.y);
-	if (length.getLength() < 32)
+	if (length.getLength() < 64)
 	{
 		dead = true;
 		hitTarget = true;

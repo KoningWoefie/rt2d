@@ -12,7 +12,7 @@ public:
 
 	virtual void update(float deltaTime);
 
-	virtual void spawn(Point3 targetPosition, Gate* gate, Point3 spawnPosition, int speed);
+	virtual void spawn(std::vector<Entity*> checkpoints, Gate* gate, Point3 spawnPosition, int speed);
 
 	bool reachedEndPoint;
 
