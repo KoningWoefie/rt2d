@@ -1,17 +1,19 @@
 /**
- * Copyright 2015 Your Name <you@yourhost.com>
+ * Copyright 2023 Sander Hoving <sander@hdms.nl>
  *
- * @brief Description of My Awesome Game.
+ * @brief Description of Barco.
  *
  * @file main.cpp
  *
- * @mainpage My Awesome Game
+ * @mainpage Barco
  *
  * @section intro Introduction
  *
- * Detailed description of My Awesome Game.
+ * This is a communist tower defense game, where you play as Josef Jalin the mayor of Navis. You have to defend Navis from those pesky "rebels" with two different towers filled with forced volunteers.
+ * 
+ * Inspired by the game Navis by the group CGB.
  *
- * There's even a second paragraph.
+ * Made by Sander Hoving in the RT2D framework.
  */
 #include <rt2d/core.h>
 
